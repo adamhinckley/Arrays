@@ -51,12 +51,21 @@ void resize_array(Array *arr)
 {
 
   // Create a new element storage with double capacity
+  int double_capacity = 2 * arr->capacity;
+  char **new_elements = malloc(double_capacity * sizeof(char *));
 
   // Copy elements into the new storage
+  for (int i = 0; i < arr->capacity; i++)
+  {
+    new_elements[i] = arr->elements[i];
+  }
 
   // Free the old elements array (but NOT the strings they point to)
+  free(arr->elements);
 
   // Update the elements and capacity to new values
+  arr->elements = new_elements;
+  arr->capacity = double_capacity;
 }
 
 /************************************
@@ -74,8 +83,14 @@ char *arr_read(Array *arr, int index)
 {
 
   // Throw an error if the index is greater than or equal to the current count
+  if (arr->count < index)
+  {
+    printf('index is higher than current count');
+    exit(1);
+  }
 
   // Otherwise, return the element at the given index
+  return arr->elements[index];
 }
 
 /*****
