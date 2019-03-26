@@ -28,7 +28,9 @@ Array *create_array(int capacity)
   arr->capacity = capacity;
   arr->count = 0;
   // Allocate memory for elements
-  arr->elements = malloc(sizeof(char *) * capacity);
+  arr->elements = calloc(1, sizeof(char *) * capacity);
+
+  return arr;
 }
 
 /*****
@@ -85,7 +87,7 @@ char *arr_read(Array *arr, int index)
   // Throw an error if the index is greater than or equal to the current count
   if (arr->count < index)
   {
-    printf('index is higher than current count');
+    printf("index is higher than current count");
     exit(1);
   }
 
@@ -100,14 +102,29 @@ void arr_insert(Array *arr, char *element, int index)
 {
 
   // Throw an error if the index is greater than the current count
+  if (arr->count < index)
+  {
+    printf("index is higher than current count");
+    exit(1);
+  }
 
   // Resize the array if the number of elements is over capacity
+  if (arr->capacity < arr->count)
+  {
+    resize_array(arr);
+  }
 
   // Move every element after the insert index to the right one position
+  for (int i = index; i < arr->count; i++)
+  {
+    arr->elements[i + 1] = arr->elements[i];
+  }
 
   // Copy the element and add it to the array
+  arr->elements[index] = element;
 
   // Increment count by 1
+  arr->count++;
 }
 
 /*****
@@ -117,11 +134,17 @@ void arr_append(Array *arr, char *element)
 {
 
   // Resize the array if the number of elements is over capacity
+  if (arr->capacity < arr->count + 1)
+  {
+    resize_array(arr);
+  }
+
   // or throw an error if resize isn't implemented yet.
 
   // Copy the element and add it to the end of the array
-
+  arr->elements[arr->count + 1] = element;
   // Increment count by 1
+  arr->count++;
 }
 
 /*****
