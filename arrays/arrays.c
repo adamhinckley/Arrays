@@ -73,7 +73,7 @@ void resize_array(Array *arr)
 char *arr_read(Array *arr, int index)
 {
 
-  // Throw an error if the index is greater than the current count
+  // Throw an error if the index is greater than or equal to the current count
 
   // Otherwise, return the element at the given index
 }
