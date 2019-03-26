@@ -148,20 +148,30 @@ void arr_append(Array *arr, char *element)
 }
 
 /*****
- * Remove the first occurence of the given element from the array,
- * then shift every element after that occurence to the left one slot.
+ * Remove the first occurrence of the given element from the array,
+ * then shift every element after that occurrence to the left one slot.
  *
  * Throw an error if the value is not found.
  *****/
 void arr_remove(Array *arr, char *element)
 {
-
-  // Search for the first occurence of the element and remove it.
-  // Don't forget to free its memory!
-
-  // Shift over every element after the removed element to the left one position
-
-  // Decrement count by 1
+  // Search for the first occurrence of the element and remove it.
+  for (int i = 0; i < arr->count; i++)
+  {
+    if (arr->elements == element)
+    {
+      arr->elements[i] = NULL;
+      for (int j = i; j < arr->count; i++)
+      {
+        // Shift over every element after the removed element to the left one position
+        arr->elements[j + 1] = arr->elements[j];
+      }
+      // Don't forget to free its memory!
+      free(arr->elements[arr->count]);
+      // Decrement count by 1
+      arr->count--;
+    }
+  }
 }
 
 /*****
